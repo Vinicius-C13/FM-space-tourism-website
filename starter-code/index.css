@@ -13,12 +13,12 @@
     --clr-lightblue: 208, 214, 248;
 
     /*Font-size*/
-    --fs-900: 9.375rem;
-    --fs-800: 6.25rem;
-    --fs-700: 3.5rem;
-    --fs-600: 2rem;
+    --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+    --fs-800: 3.5rem;
+    --fs-700: 1.5rem;
+    --fs-600: 1rem;
     --fs-500: 1.75rem;
-    --fs-400: 1.125rem;
+    --fs-400: 0.9375rem;
     --fs-300: 1rem;
     --fs-200: 0.875rem;
 
@@ -27,6 +27,28 @@
     --ff-sans-cond: "Barlow Condensed", sans-serif;
     --ff-sans-normal: "Barlow", sans-serif;
 }
+
+    @media (min-width: 35rem){
+        :root{
+            --fs-800: 5rem;
+            --fs-700: 2.5rem;
+            --fs-600: 1.5rem;
+            --fs-400: 1rem;
+        }
+
+    }
+    
+    @media (min-width: 45rem){
+        :root{
+            --fs-800: 6.25rem;
+            --fs-700: 3.5rem;
+            --fs-600: 2rem;
+            --fs-400: 1.125rem;
+        }
+
+
+
+    }
 
 /*-----------------*/
 /*Reset            */
@@ -66,6 +88,11 @@ body{
     line-height: 1.5;
     min-height: 100vh;
     font-family: var(--ff-sans-normal);
+    font-size: var(--fs-300);
+    color: rgb(var(--clr-dark));
+
+    display: grid;
+    grid-template-rows: min-content 1fr;
 }
 
 /*make images easy to work with*/
@@ -85,6 +112,7 @@ select{
 /*Add a default margin to section*/
 section {margin-top: 2rem;}
 
+
 /*-----------------*/
 /*Utility classes  */
 /*-----------------*/
@@ -102,10 +130,46 @@ section {margin-top: 2rem;}
     gap: var(--gap,1rem);
 }
 
+.d-block{
+    display: block;
+}
+
 .container{
     padding-inline: 2em;
     margin-inline: auto;
     max-width: 80rem;
+}
+
+.grid-container{
+    display: grid;
+    text-align: center;
+    padding-inline: 1rem;
+    place-items: center;
+}
+
+.grid-container *{
+    max-width: 50ch;
+}
+
+@media (min-width: 45em){
+    .grid-container {
+        text-align: left;
+        column-gap: 2rem;
+        grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(1rem, 1fr);
+    }
+
+    .grid-container>*:first-child{
+        grid-column: 2;
+    }
+
+    .grid-container>*:last-child{
+        grid-column: 3;
+    }
+
+    .grid-container--home{
+        padding-bottom: max(6rem, 20vh);
+        align-items: end;
+    }
 }
 
 .flow > *:where(:not(:first-child)){
@@ -178,11 +242,13 @@ section {margin-top: 2rem;}
 /*-----------------*/
 
 .large-button{
+    border: none;
     border-radius: 50%;
+    font-size: 2rem;
     position: relative;
     z-index: 1;
     place-items: center; /*This is a shortcut to justify-content and align-items. Very useful.*/
-    display: flex;
+    display: inline-flex;
     text-decoration: none;
     padding: 0 2rem;
     aspect-ratio: 1/1; /*This is weasome. Allows you to make the div proportional automaticaly*/
@@ -207,21 +273,113 @@ section {margin-top: 2rem;}
     opacity: 1;
 }
 
+/*Primary Menu*/
+
+.logo{ margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);}
+
+.primary-header {
+    justify-content: space-between;
+    align-items: center;
+}
+
 .primary-navigation{
-    --gap: 4rem;
+    --gap: clamp(1.5rem, 5vw, 3.5rem);
+    --underline-padding: 2em;
     list-style: none;
     padding: 0;
+    padding-inline: clamp(3.5rem, 7vw, 7rem);
     margin: 0;
-    background-color: rgb(var(--clr-white),0.25);
+    background-color: rgb(var(--clr-dark),0.95);
 }
 
 .primary-navigation a{
     text-decoration: none;
+    color: inherit;
 }
 
 .primary-navigation span{
     margin-right: .5rem;
     font-weight: 700;
+}
+
+@supports(backdrop-filter: blur(1rem)){
+    .primary-navigation{
+        background-color: rgb(var(--clr-white),0.1);
+        backdrop-filter: blur(1rem);
+    }
+}
+
+.mobile-nav-button {
+    display: none;
+}
+
+@media (min-width: 35em) and (max-width: 44.999em){
+    .primary-navigation span{
+        display: none;
+    }
+}
+
+@media (min-width: 45em){
+    .primary-navigation{
+        margin-block: 2rem;
+    }
+
+    .primary-header::after{
+        content: '';
+        display: block;
+        position: relative;
+        margin-inline: 2.5rem -2.5rem;
+        height: 1px;
+        width: 100%;
+        background-color:rgb(var(--clr-white), .3);
+        order: 1;
+    }
+
+    nav{order: 2;}
+
+}
+
+@media(max-width: 35em){
+
+    .primary-navigation{
+        --gap: 0;
+        --underline-padding: .7em;
+        list-style: none;
+        margin: 0;
+        flex-direction: column;
+        position: fixed;
+        z-index: 1000;
+        inset: 0 0 0 30%;
+        padding: min(20rem, 15vh) 2rem;
+        transform: translateX(100%);
+        transition: transform 450ms ease-in-out;
+    }
+
+    .primary-navigation[data-visible="true"] {transform: translateX(0);}
+
+    .primary-navigation.underline-indicators>.active {border-color: transparent;}
+
+    .mobile-nav-button {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        top: 2rem;
+        z-index: 1500;
+        width: 1.5rem;
+        aspect-ratio: 1;
+        border: none;
+        background-color: transparent;
+        background-image: url(./assets/shared/icon-hamburger.svg);
+        background-repeat: no-repeat;
+    }
+
+}
+
+
+.primary-navigation>*{
+    font-family: var(--ff-sans-cond);
+    color: rgb(var(--clr-white));
+    text-transform: uppercase;
 }
 
 .underline-indicators>*{
@@ -241,13 +399,11 @@ section {margin-top: 2rem;}
     color: rgb(var(--clr-white));
 }
 
-.tab-list{
-    --gap: 2rem;
-}
 
-.tab-list>*{
-    background-color: transparent;
-}
+
+.tab-list{--gap: 2rem;}
+
+.tab-list>*{background-color: transparent;}
 
 .dot-indicators > *{
     border: none;
@@ -257,13 +413,9 @@ section {margin-top: 2rem;}
     background-color: rgb(var(--clr-white),.25);
 }
 
-.dot-indicators > *:hover{
-    background-color: rgb(var(--clr-white),.6);
-}
+.dot-indicators > *:hover {background-color: rgb(var(--clr-white),.6);}
 
-.dot-indicators > [aria-selected="true"]{
-    background-color: rgb(var(--clr-white),1);
-}
+.dot-indicators > [aria-selected="true"] { background-color: rgb(var(--clr-white),1);}
 
 .number-indicators>*{
     border: 1px solid rgb(var(--clr-white), .5);
@@ -278,8 +430,32 @@ section {margin-top: 2rem;}
     background-color: rgb(var(--clr-white));
 }
 
-.number-indicators>*:hover{
-    border-color: rgb(var(--clr-white), 1);
+.number-indicators>*:hover {border-color: rgb(var(--clr-white), 1);}
+
+/*-------------------------*/
+/*Page specific background */
+/*-------------------------*/
+
+body{
+    background-size: cover;
+    background-position: bottom center;
+}
+
+.home{
+    background-image: url(./assets/home/background-home-mobile.jpg);
+}
+
+@media (min-width: 35em){
+    .home{
+        background-position: center center;
+        background-image: url(./assets/home/background-home-tablet.jpg);
+    }
+}
+
+@media (min-width: 45em){
+    .home{
+        background-image: url(./assets/home/background-home-desktop.jpg);
+    }
 }
 
 
