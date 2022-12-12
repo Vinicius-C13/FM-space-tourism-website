@@ -6,11 +6,11 @@ mobileNav_button.addEventListener('click', ()=>{
     
     if(VisiblityStt === "false"){
         mobileNav_div.setAttribute("data-visible", true)
-        mobileNav_button.style.backgroundImage = 'url(./assets/shared/icon-close.svg)';
+        mobileNav_button.style.backgroundImage = 'url(../assets/shared/icon-close.svg)';
     }
     else{
         mobileNav_div.setAttribute("data-visible", false)
-        mobileNav_button.style.backgroundImage = 'url(./assets/shared/icon-hamburger.svg)';
+        mobileNav_button.style.backgroundImage = 'url(../assets/shared/icon-hamburger.svg)';
     }
 });
 
@@ -64,7 +64,7 @@ function changeContent(destination){
             descriptionDestination.innerText = "See our planet as you’ve never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you’re there, take in some history by visiting the Luna 2 and Apollo 11 landing sites.";
             distanceDetails_p.innerText = "384,400 km";
             travelTimeDetails_p.innerText = "3 days";
-            destinationImage.src = "./assets/destination/image-moon.png";
+            destinationImage.src = "../assets/destination/image-moon.png";
             break;
 
         case 'mars':
@@ -72,7 +72,7 @@ function changeContent(destination){
             descriptionDestination.innerText = "Don’t forget to pack your hiking boots. You’ll need them to tackle Olympus Mons, the tallest planetary mountain in our solar system. It’s two and a half times the size of Everest!";
             distanceDetails_p.innerText = "225 mil. km";
             travelTimeDetails_p.innerText = "9 months";
-            destinationImage.src = "./assets/destination/image-mars.png";
+            destinationImage.src = "../assets/destination/image-mars.png";
             break;
 
         case 'europa':
@@ -80,7 +80,7 @@ function changeContent(destination){
             descriptionDestination.innerText = "The smallest of the four Galilean moons orbiting Jupiter, Europa is a winter lover’s dream. With an icy surface, it’s perfect for a bit of ice skating, curling, hockey, or simple relaxation in your snug wintery cabin.";
             distanceDetails_p.innerText = "628 mil. km";
             travelTimeDetails_p.innerText = "3 years";
-            destinationImage.src = "./assets/destination/image-europa.png";
+            destinationImage.src = "../assets/destination/image-europa.png";
             break;
 
         case 'titan':
@@ -88,7 +88,7 @@ function changeContent(destination){
             descriptionDestination.innerText = "The only moon known to have a dense atmosphere other than Earth, Titan is a home away from home (just a few hundred degrees colder!). As a bonus, you get striking views of the Rings of Saturn.";
             distanceDetails_p.innerText = "1.6 bil. km";
             travelTimeDetails_p.innerText = "7 years";
-            destinationImage.src = "./assets/destination/image-titan.png";
+            destinationImage.src = "../assets/destination/image-titan.png";
             break;
     }
 }
